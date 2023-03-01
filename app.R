@@ -5,13 +5,16 @@ library(argonDash)
 library(argonR)
 library(shiny)
 library(shinybusy)
+require(reshape2)
+require(casabourse)
+require(hrbrthemes)
+require(plotly)
 
 
 # Define UI -----
 ui <- argonDashPage(
   title = "Asian options",
-  author = "Diakité & Ettadlaoui",
-  description = "Argon Dash Test",
+  author = "Abdoul Oudouss Diakité",
   header = argonDashHeader(
     gradient = TRUE,
     color = "primary",
@@ -318,7 +321,7 @@ server <- function(input, output) {
         selectInput(
           inputId = "from",
           label = "Start",
-          choices = df()[["Date"]]
+          choices = sort(df()[["Date"]],decreasing = T)
         )
       ),
       argonColumn(
@@ -348,7 +351,6 @@ server <- function(input, output) {
   }) %>% bindEvent(input$pricing_btn)
 
   output$plot_simulated <- renderPlot({
-    assign("price",price(),.GlobalEnv)
     GBM0()[["plots"]]
   })
   output$plot_sim_mean <- renderPlot(

@@ -1,0 +1,14 @@
+name: AsianOptions
+title: AsianOptions
+username:
+account: aodiakite
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 7388474
+bundleId: 6722305
+url: https://aodiakite.shinyapps.io/AsianOptions/
+when: 1673454934.98895
+lastSyncTime: 1673454934.98896
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: Options_Asiatiques copy.pdf|Options_Asiatiques.pdf|Rapport_Option_Asiatique.pdf

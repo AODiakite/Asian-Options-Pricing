@@ -1,3 +1,4 @@
+Rcpp::sourceCpp("SBM.cpp")
 library(dplyr)
 library(casabourse)
 library(plotly)
@@ -39,10 +40,10 @@ trapezoidal <-  function(x){
 # Standard
 SBM <- function(t0 = 0,T_ = 1,N = 10000,nsim = 100){
   X <- Map(
-    function(x) {c(0,rnorm(n= N,mean = 0,sd = sqrt((T_ -t0)/N))) %>%
-        cumsum},
-      x = as.list(rep(N,nsim))
-      ) %>%
+    function(x) {c(0,rnormCpp(n= N,mu = 0,sigma = sqrt((T_ -t0)/N))) %>%
+        cumsumCpp()},
+    x = as.list(rep(N,nsim))
+  ) %>%
     bind_cols() %>%
     `names<-`(paste0("X",1:nsim))
   X <- X %>%
@@ -126,7 +127,7 @@ geom_asian <- function(S0,K,T_,r,sigma){
   put = -S0*exp(d1)*pnorm(-d2) + K*pnorm(-d2+sigma*sqrt(T_/3))
   list(call = call, put = put)
 }
-# Pricing
+# Pricing--------------
 pricing <- function(Averaging,Strike_type,Schema,gbm,S0,K=0,r,T_,sigma){
   if(Averaging == "Arithmetic"){
     switch(Schema,
